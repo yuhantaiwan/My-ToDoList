@@ -1,0 +1,14 @@
+<div class="form container">
+  <div class="form-group">
+    <%= @todo.title %>
+  </div>
+  <div class="form-group">
+    <%= @todo.due_date %>
+  </div>
+
+  <div class="form-group">
+    <%= simple_format(@todo.note) %>
+  </div>
+
+  <%= link_to 'Back to Index', todos_url %>
+</div>
