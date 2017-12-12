@@ -11,6 +11,7 @@ class TodosController < ApplicationController
   def create
     @todo = Todo.new(todo_params)
     if @todo.save
+      flash[:notice] = 'List was successfully created!!'
       redirect_to todos_url
     else
       render :action => :new
@@ -25,9 +26,17 @@ class TodosController < ApplicationController
     end
   end
 
+  # 過了due date，就不能刪除
+  # can_destroy method 寫在 models/todo.rb 裡
   def destroy
-    @todo.destroy
-    redirect_to todos_url
+    if @todo.can_destroy?
+      @todo.destroy
+      flash[:alert] = 'List was successfully deleted!!'
+      redirect_to todos_path
+    else
+      flash[:alert] = 'List was overdue, cannot be deleted!!'
+      redirect_to todos_path
+    end
   end
 
   private
